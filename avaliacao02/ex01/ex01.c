@@ -16,56 +16,66 @@ typedef enum{
 **************************************/
 Status valida_expressao(char* exp){
  //IMPLEMENTAR   
-    int i=0,j=0,k=0;
-    int delimitAbertura[100];
-    int delimitFechamento[100];
+
+  Pilha* p = pilha_criar();
+
+
+    TipoElemento topo;
+    TipoElemento removido;
+    int i=0;
 
     while (exp[i] != '\0')
     {
-        if(exp[i]== '(' || exp[i]== '[' || exp[i]== '{'){
-            delimitAbertura[j] = exp[i];
-            printf("delimitador abertura %d = %c\n",j,delimitAbertura[j]);
-            j++;
+      //  se for abertura, entra no if, empilha e seta o topo.
+        if(exp[i] == '(' || exp[i] == '[' || exp[i] == '{'){
+            pilha_empilhar(p,exp[i]);
+            topo =  exp[i];
         }
-        if(exp[i]== ')' || exp[i]== ']' || exp[i]== '}'){
-            delimitFechamento[k] = exp[i];
-            printf("delimitador fechadura %d = %c\n",k,delimitFechamento[k]);    
-            k++;
-        }        
-        
-        i++;
-    }
-    
-    if(k > j){
-        return ERRO1;
-    }
-    else if(j > k){
-        return ERRO2;
-    } else {
+        //se for fechamento, entra no else if
+        else if(exp[i]== ')' || exp[i]== ']' || exp[i]== '}'){
 
-    int cont = j -1;
-    for(int i=0;i<j;i++){
 
-       switch (delimitAbertura[i])
+
+        //se o topo for diferente de abertura, falta abertura
+        if(topo != '(' || topo != '[' || topo != '{')
+        return ERRO1; 
+     
+       //empilha
+        pilha_empilhar(p,exp[i]);
+
+        // compara o topo com o exp[i], se nao equivaler, gera o erro3 (incompatibilidade)
+          switch (topo)
         {
         case '(':
-        if(delimitFechamento[cont] != ')') return ERRO3;
-        else cont--;
+        if(exp[i] != ')') return ERRO3;
         break;
         case '[':
-        if(delimitFechamento[cont] != ']') return ERRO3;
-        else cont--;
+        if(exp[i] != ']') return ERRO3;
         break;
         case '{':
-        if(delimitFechamento[cont] != '}')  return ERRO3;
-        else cont--;
+        if(exp[i] != '}')  return ERRO3;
         break;                     
         default:
+
         break;
         }
-    }   
-  }
-  return OK; 
+        
+        
+      //se pilha_topo for falso, a pilha foi esvaziada sem erros, logo, OK.
+        if(pilha_topo(p,&topo) == false) return OK;
+        else{ //se nao for, desempilha os 2 ultimos e seta o topo.
+        pilha_desempilhar(p,&removido);
+        pilha_desempilhar(p,&removido); 
+        pilha_topo(p,&topo);
+        }
+
+        }
+
+         i++; 
+       
+    }
+  //se exp[i] ja tiver passado por abertura e nao houver fechamento, sairá do while pela condição, então não há fechamento, logo, erro2.
+    return ERRO2;
 }
 
 
