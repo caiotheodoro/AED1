@@ -58,13 +58,38 @@ No* devolve_enderecoNo(Lista* l, int pos);
 **************************************/
 void lista_intercalar(Lista* a, Lista* b){
 // IMPLEMENTAR
-    
 
+TipoElemento temp,val1,val2;
+TipoElemento size = a->qtde + b->qtde;
+
+for(int i=0;i<size;i++){
+
+    lista_buscar(a,i,&val1);
+    lista_buscar(b,i,&val2);
+
+    if(val2 > val1){
+        if(temp>val1){
+            lista_inserir(a,val1,i);
+
+        }
+        else{
+            lista_inserir(a,temp,i);
+            temp = val1;
+        }
+    }
+    else if(val1 > val2){
+        if(temp>val2){
+            lista_inserir(a,val2,i);
+        } else{
+            lista_inserir(a,temp,i);
+            temp = val2;
+        }
+    }
     
 }
 
 
-
+}
 
 
 /**************************************
