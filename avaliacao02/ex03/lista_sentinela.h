@@ -59,33 +59,30 @@ No* devolve_enderecoNo(Lista* l, int pos);
 void lista_intercalar(Lista* a, Lista* b){
 // IMPLEMENTAR
 
-TipoElemento temp,val1,val2;
-TipoElemento size = a->qtde + b->qtde;
+TipoElemento i=0,j=0,k=0;
+TipoElemento val1,val2,removido;
+TipoElemento size = lista_tamanho(a) + lista_tamanho(b);
 
-for(int i=0;i<size;i++){
+while(i!=size){
 
-    lista_buscar(a,i,&val1);
-    lista_buscar(b,i,&val2);
+// busca lista
+    lista_buscar(a,j,&val1);
+    lista_buscar(b,k,&val2);
 
-    if(val2 > val1){
-        if(temp>val1){
-            lista_inserir(a,val1,i);
 
-        }
-        else{
-            lista_inserir(a,temp,i);
-            temp = val1;
-        }
-    }
-    else if(val1 > val2){
-        if(temp>val2){
-            lista_inserir(a,val2,i);
-        } else{
-            lista_inserir(a,temp,i);
-            temp = val2;
-        }
-    }
-    
+// se o valor de B for menor que valor de A ou a lista de A ja tiver sido percorrida,
+// insere valor de B na posicao i, remove a posicao de B e vai pro proximo elemento de B;
+if(val1>val2 || j == lista_tamanho(a)){
+  lista_inserir(a,val2,i);
+  lista_removerPosicao(b,k,&removido);
+  k++;
+}
+else if(val2>val1){ //se o valor de A for maior que o de B, vai pro proximo elemento de A;
+  j++;
+
+}
+      lista_imprimir(a);
+       i++;
 }
 
 
