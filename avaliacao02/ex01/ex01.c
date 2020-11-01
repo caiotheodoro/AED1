@@ -26,12 +26,12 @@ Status valida_expressao(char* exp){
 
     while (exp[i] != '\0')
     {
-      //  se for abertura, entra no if, empilha e seta o topo.
+      //  se for abertura, empilha e seta o topo.
         if(exp[i] == '(' || exp[i] == '[' || exp[i] == '{'){
             pilha_empilhar(p,exp[i]);
             topo =  exp[i];
         }
-        //se for fechamento, entra no else if
+        
         else if(exp[i]== ')' || exp[i]== ']' || exp[i]== '}'){
 
 
@@ -40,8 +40,6 @@ Status valida_expressao(char* exp){
         if(topo != '(' || topo != '[' || topo != '{')
         return ERRO1; 
      
-       //empilha
-        pilha_empilhar(p,exp[i]);
 
         // compara o topo com o exp[i], se nao equivaler, gera o erro3 (incompatibilidade)
           switch (topo)
@@ -64,7 +62,6 @@ Status valida_expressao(char* exp){
       //se pilha_topo for falso, a pilha foi esvaziada sem erros, logo, OK.
         if(pilha_topo(p,&topo) == false) return OK;
         else{ //se nao for, desempilha os 2 ultimos e seta o topo.
-        pilha_desempilhar(p,&removido);
         pilha_desempilhar(p,&removido); 
         pilha_topo(p,&topo);
         }
@@ -147,4 +144,3 @@ int main(){
     
 
 }
-
