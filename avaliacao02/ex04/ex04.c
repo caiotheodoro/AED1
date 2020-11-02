@@ -53,16 +53,20 @@ No** listaOcorrencia(int* mat, int linhas, int colunas){
     // cria um vetor de ponteiros de nós e inicializa as posicoes com NULL
     No** lista = (No**)calloc(linhas, sizeof(No*));
     for(i=0; i<linhas; i++) lista[i] = NULL;
-    
+
+  
 
     for(i=0; i<linhas; i++){
+
         for(j=0; j<colunas; j++){
             printf("%3d ", *(mat + (i*colunas) + j));
-
-            
-            
+            //verifica se é diferente de zero
+            if(*(mat + (i*colunas) + j) != 0){
+              //cria o no
+              lista[i] = criar_no(*(mat + (i*colunas) + j));
+              lista[i]= lista[i]->prox;
+            }
         }
-
         printf("\n");
     }
     return lista;
